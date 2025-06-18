@@ -1,5 +1,7 @@
 package com.estudo.dscommerce.dto.response;
 
+import com.estudo.dscommerce.model.Product;
+
 public class ProductResponseDTO {
 
     private Long id;
@@ -18,6 +20,14 @@ public class ProductResponseDTO {
         this.description = description;
         this.price = price;
         this.imgUrl = imgUrl;
+    }
+
+    public ProductResponseDTO(Product product) {
+        id = product.getId();
+        name = product.getName();
+        description = product.getDescription();
+        price = product.getPrice();
+        imgUrl = product.getImgUrl();
     }
 
     public Long getId() {
