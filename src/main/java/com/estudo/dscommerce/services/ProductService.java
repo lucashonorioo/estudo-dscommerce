@@ -10,6 +10,6 @@ public interface ProductService {
 
     ProductResponseDTO findById(Long id);
     Page<ProductResponseDTO> findAll(Pageable pageable);
-
+    ProductResponseDTO insert(ProductResponseDTO productResponseDTO);
 
 }

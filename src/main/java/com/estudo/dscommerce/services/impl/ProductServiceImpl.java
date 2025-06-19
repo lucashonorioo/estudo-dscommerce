@@ -37,4 +37,20 @@ public class ProductServiceImpl implements ProductService {
         Page<Product> products = productRepository.findAll(pageable);
         return products.map( p -> new ProductResponseDTO(p));
     }
+
+    @Override
+    @Transactional
+    public ProductResponseDTO insert(ProductResponseDTO productResponseDTO){
+        Product product = new Product();
+
+        product.setName(productResponseDTO.getName());
+        product.setDescription(productResponseDTO.getDescription());
+        product.setPrice(productResponseDTO.getPrice());
+        product.setImgUrl(productResponseDTO.getImgUrl());
+
+        product = productRepository.save(product);
+
+        return new ProductResponseDTO(product);
+    }
+
 }
