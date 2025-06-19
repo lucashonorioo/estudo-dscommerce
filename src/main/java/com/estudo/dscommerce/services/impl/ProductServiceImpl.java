@@ -6,9 +6,11 @@ import com.estudo.dscommerce.repositories.ProductRepository;
 import com.estudo.dscommerce.services.ProductService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -22,10 +24,17 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    @Transactional()
+    @Transactional
     public ProductResponseDTO findById(Long id) {
-        Product product1 = productRepository.findById(id).get();
-        return new ProductResponseDTO(product1);
+        Product product = productRepository.findById(id).get();
+        return new ProductResponseDTO(product);
 
+    }
+
+    @Override
+    @Transactional
+    public Page<ProductResponseDTO> findAll(Pageable pageable) {
+        Page<Product> products = productRepository.findAll(pageable);
+        return products.map( p -> new ProductResponseDTO(p));
     }
 }

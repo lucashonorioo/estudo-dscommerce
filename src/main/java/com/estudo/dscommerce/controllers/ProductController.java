@@ -4,10 +4,14 @@ import com.estudo.dscommerce.dto.response.ProductResponseDTO;
 import com.estudo.dscommerce.model.Product;
 import com.estudo.dscommerce.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/products")
@@ -24,6 +28,11 @@ public class ProductController {
     public ProductResponseDTO findById(@PathVariable Long id){
         ProductResponseDTO product = productService.findById(id);
         return product;
+    }
+
+    @GetMapping
+    public Page<ProductResponseDTO> findAll(Pageable pageable){
+        return productService.findAll(pageable);
     }
 
 }
