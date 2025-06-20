@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -42,15 +41,28 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public ProductResponseDTO insert(ProductResponseDTO productResponseDTO){
         Product product = new Product();
-
-        product.setName(productResponseDTO.getName());
-        product.setDescription(productResponseDTO.getDescription());
-        product.setPrice(productResponseDTO.getPrice());
-        product.setImgUrl(productResponseDTO.getImgUrl());
+        copyDtoToEntity(productResponseDTO , product);
 
         product = productRepository.save(product);
 
         return new ProductResponseDTO(product);
+    }
+
+    @Override
+    @Transactional
+    public ProductResponseDTO update(Long id, ProductResponseDTO productResponseDTO){
+        Product product = productRepository.getReferenceById(id);
+        copyDtoToEntity(productResponseDTO, product);
+        product = productRepository.save(product);
+
+        return new ProductResponseDTO(product);
+    }
+
+    private static void copyDtoToEntity(ProductResponseDTO productResponseDTO, Product product){
+        product.setName(productResponseDTO.getName());
+        product.setDescription(productResponseDTO.getDescription());
+        product.setPrice(productResponseDTO.getPrice());
+        product.setImgUrl(productResponseDTO.getImgUrl());
     }
 
 }

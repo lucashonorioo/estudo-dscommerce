@@ -11,5 +11,6 @@ public interface ProductService {
     ProductResponseDTO findById(Long id);
     Page<ProductResponseDTO> findAll(Pageable pageable);
     ProductResponseDTO insert(ProductResponseDTO productResponseDTO);
+    ProductResponseDTO update(Long id, ProductResponseDTO productResponseDTO);
 
 }

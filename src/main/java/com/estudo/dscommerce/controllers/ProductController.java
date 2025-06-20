@@ -23,7 +23,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<ProductResponseDTO> findById(@PathVariable Long id){
         ProductResponseDTO product = productService.findById(id);
         return ResponseEntity.ok().body(product);
@@ -40,6 +40,12 @@ public class ProductController {
         productResponseDTO = productService.insert(productResponseDTO);
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(productResponseDTO.getId()).toUri();
         return ResponseEntity.created(location).body(productResponseDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable Long id,@RequestBody ProductResponseDTO productResponseDTO){
+        productResponseDTO = productService.update(id, productResponseDTO);
+        return ResponseEntity.ok(productResponseDTO);
     }
 
 }
