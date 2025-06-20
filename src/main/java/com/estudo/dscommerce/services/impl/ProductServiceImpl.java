@@ -58,6 +58,12 @@ public class ProductServiceImpl implements ProductService {
         return new ProductResponseDTO(product);
     }
 
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        productRepository.deleteById(id);
+    }
+
     private static void copyDtoToEntity(ProductResponseDTO productResponseDTO, Product product){
         product.setName(productResponseDTO.getName());
         product.setDescription(productResponseDTO.getDescription());
