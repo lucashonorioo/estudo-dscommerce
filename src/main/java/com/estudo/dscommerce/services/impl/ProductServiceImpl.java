@@ -1,6 +1,7 @@
 package com.estudo.dscommerce.services.impl;
 
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
+import com.estudo.dscommerce.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.model.Product;
 import com.estudo.dscommerce.repositories.ProductRepository;
 import com.estudo.dscommerce.services.ProductService;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public ProductResponseDTO findById(Long id) {
-        Product product = productRepository.findById(id).get();
+        Product product = productRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Recurso não encontrado"));
         return new ProductResponseDTO(product);
 
     }
