@@ -1,5 +1,6 @@
 package com.estudo.dscommerce.services.impl;
 
+import com.estudo.dscommerce.dto.request.ProductRequestDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
 import com.estudo.dscommerce.exceptions.DatabaseException;
 import com.estudo.dscommerce.exceptions.ResourceNotFoundException;
@@ -44,9 +45,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponseDTO insert(ProductResponseDTO productResponseDTO){
+    public ProductResponseDTO insert(ProductRequestDTO productRequestDTO){
         Product product = new Product();
-        copyDtoToEntity(productResponseDTO , product);
+        copyDtoToEntity(productRequestDTO , product);
 
         product = productRepository.save(product);
 
@@ -55,10 +56,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductResponseDTO update(Long id, ProductResponseDTO productResponseDTO){
+    public ProductResponseDTO update(Long id, ProductRequestDTO productRequestDTO){
             try{
                 Product product = productRepository.getReferenceById(id);
-                copyDtoToEntity(productResponseDTO, product);
+                copyDtoToEntity(productRequestDTO, product);
                 product = productRepository.save(product);
                 return new ProductResponseDTO(product);
             }
@@ -82,11 +83,11 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
-    private static void copyDtoToEntity(ProductResponseDTO productResponseDTO, Product product){
-        product.setName(productResponseDTO.getName());
-        product.setDescription(productResponseDTO.getDescription());
-        product.setPrice(productResponseDTO.getPrice());
-        product.setImgUrl(productResponseDTO.getImgUrl());
+    private static void copyDtoToEntity(ProductRequestDTO productRequestDTO, Product product){
+        product.setName(productRequestDTO.getName());
+        product.setDescription(productRequestDTO.getDescription());
+        product.setPrice(productRequestDTO.getPrice());
+        product.setImgUrl(productRequestDTO.getImgUrl());
     }
 
 }
