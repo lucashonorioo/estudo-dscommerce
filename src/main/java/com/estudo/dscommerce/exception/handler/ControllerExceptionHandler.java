@@ -1,9 +1,9 @@
-package com.estudo.dscommerce.exceptions.handler;
+package com.estudo.dscommerce.exception.handler;
 
-import com.estudo.dscommerce.exceptions.CustomError;
-import com.estudo.dscommerce.exceptions.DatabaseException;
-import com.estudo.dscommerce.exceptions.ResourceNotFoundException;
-import com.estudo.dscommerce.exceptions.ValidationError;
+import com.estudo.dscommerce.exception.error.CustomError;
+import com.estudo.dscommerce.exception.exceptions.DatabaseException;
+import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
+import com.estudo.dscommerce.exception.error.ValidationError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

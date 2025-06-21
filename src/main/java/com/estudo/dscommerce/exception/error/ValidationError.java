@@ -1,4 +1,4 @@
-package com.estudo.dscommerce.exceptions;
+package com.estudo.dscommerce.exception.error;
 
 import java.time.Instant;
 import java.util.ArrayList;

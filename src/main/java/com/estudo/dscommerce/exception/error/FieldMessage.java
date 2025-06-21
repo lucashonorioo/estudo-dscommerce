@@ -1,4 +1,4 @@
-package com.estudo.dscommerce.exceptions;
+package com.estudo.dscommerce.exception.error;
 
 public class FieldMessage {
 

@@ -2,8 +2,8 @@ package com.estudo.dscommerce.services.impl;
 
 import com.estudo.dscommerce.dto.request.ProductRequestDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
-import com.estudo.dscommerce.exceptions.DatabaseException;
-import com.estudo.dscommerce.exceptions.ResourceNotFoundException;
+import com.estudo.dscommerce.exception.exceptions.DatabaseException;
+import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.model.Product;
 import com.estudo.dscommerce.repositories.ProductRepository;
 import com.estudo.dscommerce.services.ProductService;
