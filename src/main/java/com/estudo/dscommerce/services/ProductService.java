@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductService {
 
     ProductResponseDTO findById(Long id);
-    Page<ProductResponseDTO> findAll(Pageable pageable);
+    Page<ProductResponseDTO> findAll(String name, Pageable pageable);
     ProductResponseDTO insert(ProductRequestDTO productRequestDTO);
     ProductResponseDTO update(Long id, ProductRequestDTO productRequestDTO);
     void delete(Long id);

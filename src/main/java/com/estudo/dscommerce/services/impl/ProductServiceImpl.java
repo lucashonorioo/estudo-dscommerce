@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ProductResponseDTO findById(Long id) {
         Product product = productRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Recurso não encontrado"));
         return new ProductResponseDTO(product);
@@ -37,9 +37,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
-    public Page<ProductResponseDTO> findAll(Pageable pageable) {
-        Page<Product> products = productRepository.findAll(pageable);
+    @Transactional(readOnly = true)
+    public Page<ProductResponseDTO> findAll(String name, Pageable pageable) {
+        Page<Product> products = productRepository.searchByName(name, pageable);
         return products.map( p -> new ProductResponseDTO(p));
     }
 
