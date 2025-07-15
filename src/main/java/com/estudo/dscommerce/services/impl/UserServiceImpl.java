@@ -1,13 +1,18 @@
 package com.estudo.dscommerce.services.impl;
 
+import com.estudo.dscommerce.dto.response.UserResponseDTO;
 import com.estudo.dscommerce.model.Role;
 import com.estudo.dscommerce.model.User;
-import com.estudo.dscommerce.projection.UserDetailsProjection;
+import com.estudo.dscommerce.projections.UserDetailsProjection;
 import com.estudo.dscommerce.repositories.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +40,24 @@ public class UserServiceImpl implements UserDetailsService {
                     getAuthority()));
         }
         return user;
+    }
+
+    protected User authenticated(){
+        try{
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
+            String username = jwtPrincipal.getClaim("username");
+            return userRepository.findByEmail(username).get();
+        }
+        catch (Exception e){
+            throw new UsernameNotFoundException("Email not found");
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public UserResponseDTO getMe(){
+        User user = authenticated();
+        return new UserResponseDTO(user);
     }
 
 }
