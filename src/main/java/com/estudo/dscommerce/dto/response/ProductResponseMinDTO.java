@@ -1,6 +1,10 @@
 package com.estudo.dscommerce.dto.response;
 
+import com.estudo.dscommerce.model.Category;
 import com.estudo.dscommerce.model.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProductResponseMinDTO {
 
@@ -8,6 +12,8 @@ public class ProductResponseMinDTO {
     private String name;
     private Double price;
     private String imgUrl;
+
+    private List<CategoryResponseDTO> categories = new ArrayList<>();
 
     public ProductResponseMinDTO(){
 
@@ -25,8 +31,10 @@ public class ProductResponseMinDTO {
         name = product.getName();
         price = product.getPrice();
         imgUrl = product.getImgUrl();
+        for(Category category : product.getCategories()){
+            categories.add(new CategoryResponseDTO(category));
+        }
     }
-
 
     public Long getId() {
         return id;
@@ -42,5 +50,9 @@ public class ProductResponseMinDTO {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public List<CategoryResponseDTO> getCategories() {
+        return categories;
     }
 }

@@ -1,10 +1,13 @@
 package com.estudo.dscommerce.services.impl;
 
+import com.estudo.dscommerce.dto.request.CategoryRequestDTO;
 import com.estudo.dscommerce.dto.request.ProductRequestDTO;
+import com.estudo.dscommerce.dto.response.CategoryResponseDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseMinDTO;
 import com.estudo.dscommerce.exception.exceptions.DatabaseException;
 import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
+import com.estudo.dscommerce.model.Category;
 import com.estudo.dscommerce.model.Product;
 import com.estudo.dscommerce.repositories.ProductRepository;
 import com.estudo.dscommerce.services.ProductService;
@@ -89,6 +92,14 @@ public class ProductServiceImpl implements ProductService {
         product.setDescription(productRequestDTO.getDescription());
         product.setPrice(productRequestDTO.getPrice());
         product.setImgUrl(productRequestDTO.getImgUrl());
+
+        product.getCategories().clear();
+        for(CategoryRequestDTO categoryRequestDTO : productRequestDTO.getCategories()){
+            Category category = new Category();
+            category.setId(categoryRequestDTO.getId());
+            product.getCategories().add(category);
+        }
+
     }
 
 }
