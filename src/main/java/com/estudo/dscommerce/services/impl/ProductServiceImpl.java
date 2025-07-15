@@ -2,6 +2,7 @@ package com.estudo.dscommerce.services.impl;
 
 import com.estudo.dscommerce.dto.request.ProductRequestDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
+import com.estudo.dscommerce.dto.response.ProductResponseMinDTO;
 import com.estudo.dscommerce.exception.exceptions.DatabaseException;
 import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.model.Product;
@@ -38,9 +39,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<ProductResponseDTO> findAll(String name, Pageable pageable) {
+    public Page<ProductResponseMinDTO> findAll(String name, Pageable pageable) {
         Page<Product> products = productRepository.searchByName(name, pageable);
-        return products.map( p -> new ProductResponseDTO(p));
+        return products.map( p -> new ProductResponseMinDTO(p));
     }
 
     @Override

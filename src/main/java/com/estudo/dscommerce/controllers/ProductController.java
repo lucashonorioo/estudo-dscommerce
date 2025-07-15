@@ -2,6 +2,7 @@ package com.estudo.dscommerce.controllers;
 
 import com.estudo.dscommerce.dto.request.ProductRequestDTO;
 import com.estudo.dscommerce.dto.response.ProductResponseDTO;
+import com.estudo.dscommerce.dto.response.ProductResponseMinDTO;
 import com.estudo.dscommerce.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class ProductController {
 
 
     @GetMapping
-    public ResponseEntity<Page<ProductResponseDTO>> findAll(@RequestParam(name = "name", defaultValue = "")String name, Pageable pageable){
-        Page<ProductResponseDTO> productResponseDTOS = productService.findAll(name, pageable);
-        return ResponseEntity.ok().body(productResponseDTOS);
+    public ResponseEntity<Page<ProductResponseMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "")String name, Pageable pageable){
+        Page<ProductResponseMinDTO> productResponseMinDTOS = productService.findAll(name, pageable);
+        return ResponseEntity.ok().body(productResponseMinDTOS);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
