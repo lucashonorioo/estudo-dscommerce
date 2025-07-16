@@ -1,7 +1,7 @@
 package com.estudo.dscommerce.services.impl;
 
+import com.estudo.dscommerce.dto.request.ItemsRequestDTO;
 import com.estudo.dscommerce.dto.request.OrderRequestDTO;
-import com.estudo.dscommerce.dto.response.ItemsResponseDTO;
 import com.estudo.dscommerce.dto.response.OrderResponseDTO;
 import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.model.*;
@@ -45,9 +45,9 @@ public class OrderServiceImpl implements OrderService {
 
         User user = userService.authenticated();
         order.setClient(user);
-        for(ItemsResponseDTO itemsResponseDTO : orderRequestDTO.getItems()){
-            Product product = productRepository.getReferenceById(itemsResponseDTO.getProductId());
-            OrderItem orderItem = new OrderItem(order, product, itemsResponseDTO.getQuantity(), product.getPrice());
+        for(ItemsRequestDTO itemsRequestDTO : orderRequestDTO.getItems()){
+            Product product = productRepository.getReferenceById(itemsRequestDTO.getProductId());
+            OrderItem orderItem = new OrderItem(order, product, itemsRequestDTO.getQuantity(), product.getPrice());
             order.getItems().add(orderItem);
         }
 
