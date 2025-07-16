@@ -8,6 +8,7 @@ import com.estudo.dscommerce.model.*;
 import com.estudo.dscommerce.repositories.OrderItemRepository;
 import com.estudo.dscommerce.repositories.OrderRepository;
 import com.estudo.dscommerce.repositories.ProductRepository;
+import com.estudo.dscommerce.services.AuthService;
 import com.estudo.dscommerce.services.OrderService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,19 +22,22 @@ public class OrderServiceImpl implements OrderService {
     private final UserServiceImpl userService;
     private final ProductRepository productRepository;
     private final OrderItemRepository orderItemRepository;
+    private final AuthService authService;
 
 
-    public OrderServiceImpl(OrderRepository orderRepository, UserServiceImpl userService, ProductRepository productRepository, OrderItemRepository orderItemRepository) {
+    public OrderServiceImpl(OrderRepository orderRepository, UserServiceImpl userService, ProductRepository productRepository, OrderItemRepository orderItemRepository, AuthService authService) {
         this.orderRepository = orderRepository;
         this.userService = userService;
         this.productRepository = productRepository;
         this.orderItemRepository = orderItemRepository;
+        this.authService = authService;
     }
 
     @Override
     @Transactional(readOnly = true)
     public OrderResponseDTO findById(Long id) {
         Order order = orderRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Recurso não encontrado"));
+        authService.validateSelfOrAdmin(order.getClient().getId());
         return new OrderResponseDTO(order);
     }
 

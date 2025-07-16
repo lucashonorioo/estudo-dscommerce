@@ -2,6 +2,7 @@ package com.estudo.dscommerce.exception.handler;
 
 import com.estudo.dscommerce.exception.error.CustomError;
 import com.estudo.dscommerce.exception.exceptions.DatabaseException;
+import com.estudo.dscommerce.exception.exceptions.ForbiddenException;
 import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.exception.error.ValidationError;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,4 +41,12 @@ public class ControllerExceptionHandler {
         }
         return ResponseEntity.status(status).body(err);
     }
+
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<CustomError> forbidden(ForbiddenException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
 }
