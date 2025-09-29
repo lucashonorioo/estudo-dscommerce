@@ -82,7 +82,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
 
 	</dependencies>
 
@@ -99,7 +103,6 @@
 						<exclude>com/estudo/dscommerce/config/**</exclude>
 						<exclude>com/estudo/dscommerce/model/**</exclude>
 						<exclude>com/estudo/dscommerce/dto/**</exclude>
-						<exclude>com/estudo/dscommerce/services/*</exclude>
 						<exclude>com/estudo/dscommerce/exception/**</exclude>
 					</excludes>
 				</configuration>

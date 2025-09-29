@@ -4,6 +4,7 @@ import com.estudo.dscommerce.dto.response.ProductResponseDTO;
 import com.estudo.dscommerce.exception.exceptions.ResourceNotFoundException;
 import com.estudo.dscommerce.model.Product;
 import com.estudo.dscommerce.repositories.ProductRepository;
+import com.estudo.dscommerce.tests.ProductFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.Optional;
 
 @ExtendWith(SpringExtension.class)
-public class ProductServiceTests {
+public class ProductServiceImplTests {
 
     @InjectMocks
     private ProductServiceImpl productService;
@@ -27,15 +28,17 @@ public class ProductServiceTests {
     private long existingId;
     private long nonExistingId;
     private Product product;
+    private String productName;
 
     @BeforeEach
     void setUp() throws Exception{
 
         existingId = 1L;
         nonExistingId = 2L;
-        product = new Product();
-        product.setId(existingId);
-        product.setName("Smart Tv");
+
+        productName = "Smart Tv";
+
+        product = ProductFactory.createProduct(productName);
 
         Mockito.when(productRepository.findById(existingId)).thenReturn(Optional.of(product));
 
