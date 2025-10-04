@@ -5,6 +5,8 @@ import com.estudo.dscommerce.model.Role;
 import com.estudo.dscommerce.model.User;
 import com.estudo.dscommerce.projections.UserDetailsProjection;
 import com.estudo.dscommerce.repositories.UserRepository;
+import com.estudo.dscommerce.util.CustomUserUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,6 +22,9 @@ import java.util.List;
 public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
+
+    @Autowired
+    private CustomUserUtil customUserUtil;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -44,9 +49,7 @@ public class UserServiceImpl implements UserDetailsService {
 
     protected User authenticated(){
         try{
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-            String username = jwtPrincipal.getClaim("username");
+            String username = customUserUtil.getLoggedUsername();
             return userRepository.findByEmail(username).get();
         }
         catch (Exception e){
