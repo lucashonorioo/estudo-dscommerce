@@ -17,8 +17,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void validateSelfOrAdmin(Long userId) {
         User user = userService.authenticated();
-        if(!user.hasRole("ROLE_ADMIN") && !user.getId().equals(userId)) {
-            throw new ForbiddenException("Acess denied");
+        if(user.hasRole("ROLE_ADMIN")){
+            return;
+        }
+        if(!user.getId().equals(userId)){
+            throw new ForbiddenException("Access dined.");
         }
     }
 }

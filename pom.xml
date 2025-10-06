@@ -104,6 +104,7 @@
 						<exclude>com/estudo/dscommerce/model/**</exclude>
 						<exclude>com/estudo/dscommerce/dto/**</exclude>
 						<exclude>com/estudo/dscommerce/exception/**</exclude>
+						<exclude>com/estudo/dscommerce/util/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

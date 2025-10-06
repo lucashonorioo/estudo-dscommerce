@@ -6,13 +6,9 @@ import com.estudo.dscommerce.model.User;
 import com.estudo.dscommerce.projections.UserDetailsProjection;
 import com.estudo.dscommerce.repositories.UserRepository;
 import com.estudo.dscommerce.util.CustomUserUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,11 +19,11 @@ public class UserServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private CustomUserUtil customUserUtil;
+    private final CustomUserUtil customUserUtil;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, CustomUserUtil customUserUtil) {
         this.userRepository = userRepository;
+        this.customUserUtil = customUserUtil;
     }
 
     @Override
