@@ -14,6 +14,11 @@ public class ItemsRequestDTO {
 
     }
 
+    public ItemsRequestDTO(Long productId, Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
+    }
+
     public ItemsRequestDTO(Long productId, String name, Double price, Integer quantity, String imgUrl) {
         this.productId = productId;
         this.name = name;

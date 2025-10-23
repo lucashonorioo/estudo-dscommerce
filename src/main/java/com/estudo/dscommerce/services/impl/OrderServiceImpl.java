@@ -49,15 +49,18 @@ public class OrderServiceImpl implements OrderService {
 
         User user = userService.authenticated();
         order.setClient(user);
+
         for(ItemsRequestDTO itemsRequestDTO : orderRequestDTO.getItems()){
             Product product = productRepository.getReferenceById(itemsRequestDTO.getProductId());
             OrderItem orderItem = new OrderItem(order, product, itemsRequestDTO.getQuantity(), product.getPrice());
             order.getItems().add(orderItem);
         }
 
-        orderRepository.save(order);
-        orderItemRepository.saveAll(order.getItems());
+        Order saveOrder = orderRepository.save(order);
 
-        return new OrderResponseDTO(order);
+        return new OrderResponseDTO(saveOrder);
     }
+
+
+
 }
