@@ -88,7 +88,20 @@
 			<scope>test</scope>
 		</dependency>
 
-	</dependencies>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -105,6 +118,7 @@
 						<exclude>com/estudo/dscommerce/dto/**</exclude>
 						<exclude>com/estudo/dscommerce/exception/**</exclude>
 						<exclude>com/estudo/dscommerce/util/**</exclude>
+                        <exclude>com/estudo/dscommerce/controllers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
