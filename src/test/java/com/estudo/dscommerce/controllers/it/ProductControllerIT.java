@@ -74,7 +74,7 @@ public class ProductControllerIT {
 
         existingProductId = 1L;
         notExistingProductId = Long.MAX_VALUE;
-        dependentProductId = 5L;
+        dependentProductId = 3L;
 
     }
 
@@ -263,6 +263,18 @@ public class ProductControllerIT {
 
         result.andExpect(status().isNotFound());
     }
+
+    @Test
+    public void deleteShouldReturnBadRequestWhenIdIsDependence() throws Exception {
+
+        ResultActions result = mockMvc
+                .perform(delete("/products/{id}", dependentProductId)
+                        .header("Authorization", "Bearer " + adminToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isBadRequest());
+    }
+
 
 
 }
