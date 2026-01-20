@@ -77,11 +77,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(propagation = Propagation.SUPPORTS)
     public void delete(Long id) {
+        if (!productRepository.existsById(id)){
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
         try{
             productRepository.deleteById(id);
-        }
-        catch (EmptyResultDataAccessException e){
-            throw new ResourceNotFoundException("Recurso não encontrado");
         }
         catch (DataIntegrityViolationException e){
             throw new DatabaseException("Falha de integridade referencial");

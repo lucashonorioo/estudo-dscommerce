@@ -18,7 +18,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +73,7 @@ public class ProductControllerIT {
         productRequestDTO = new ProductRequestDTO(product);
 
         existingProductId = 1L;
-        notExistingProductId = 100L;
+        notExistingProductId = Long.MAX_VALUE;
         dependentProductId = 5L;
 
     }
