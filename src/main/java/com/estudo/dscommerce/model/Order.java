@@ -17,6 +17,8 @@ public class Order {
     private Long id;
     @Column(columnDefinition = "TIME WITHOUT TIME ZONE")
     private Instant moment;
+
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
     @ManyToOne
