@@ -63,9 +63,9 @@ public class OrderControllerIT {
         clientToken = tokenUtil.obtainAccessToken(mockMvc, clientUsername, clientPassword);
         adminToken = tokenUtil.obtainAccessToken(mockMvc, adminUsername, adminPassword);
 
-        invalidToken = adminToken + "dwras";
+        invalidToken = adminToken + "xpto";
 
-        existingOrderId = 1L;
+        existingOrderId = 2L;
         nonExistingOrderId = 100L;
 
         user = UserFactory.createClientUser();
@@ -79,16 +79,63 @@ public class OrderControllerIT {
     @Test
     public void findByIdShouldReturnExistingOrderWhenLoggedAdmin() throws Exception{
 
-        ResultActions result = mockMvc.perform(get("/orders/{id}", existingOrderId)
+        ResultActions result = mockMvc
+                .perform(get("/orders/{id}", existingOrderId)
                 .header("Authorization", "Bearer " + adminToken)
                 .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(status().isOk());
         result.andExpect(jsonPath("$.id").value(existingOrderId));
-
+        result.andExpect(jsonPath("$.client.name").value("Maria Brown"));
 
     }
 
+    @Test
+    public void findByIdShouldReturnExistingOrderWhenLoggedClient() throws Exception{
+
+        ResultActions result = mockMvc
+                .perform(get("/orders/{id}", existingOrderId)
+                        .header("Authorization", "Bearer " + clientToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isOk());
+    }
+
+    @Test
+    public void findByIdShouldReturnForbiddenWhenRequestNotBelongUser() throws Exception {
+
+        Long otherOrderId = 1L;
+
+        ResultActions result = mockMvc
+                .perform(get("/orders/{id}", otherOrderId)
+                        .header("Authorization", "Bearer " + clientToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    public void findByIdShouldReturnNotFoundWhenOrderDoesNotExists() throws Exception{
+
+        ResultActions result = mockMvc
+                .perform(get("/orders/{id}", nonExistingOrderId)
+                        .header("Authorization", "Bearer " + adminToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void findByIdShouldReturnUnauthorizedWhenDoesNotHaveUser() throws Exception {
+
+        ResultActions result = mockMvc
+                .perform(get("/orders/{id}", existingOrderId)
+                        .header("Authorization", "Bearer " + invalidToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isUnauthorized());
+    }
 
 
 }
