@@ -19,7 +19,10 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.print.attribute.standard.Media;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -265,6 +268,7 @@ public class ProductControllerIT {
     }
 
     @Test
+    @Transactional(propagation = Propagation.SUPPORTS)
     public void deleteShouldReturnBadRequestWhenIdIsDependence() throws Exception {
 
         ResultActions result = mockMvc
@@ -275,6 +279,29 @@ public class ProductControllerIT {
         result.andExpect(status().isBadRequest());
     }
 
+    @Test
+    public void deleteShouldReturnForbiddenWhenClientLogged() throws Exception{
 
+        ResultActions result = mockMvc
+                .perform(delete("/products/{id}", existingProductId)
+                        .header("Authorization", "Bearer " + clientToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void deleteShouldReturnUnauthorizedWhenUserIsNotLogged() throws Exception{
+
+        ResultActions result = mockMvc
+                .perform(delete("/products/{id}", existingProductId)
+                        .header("Authorization", "Bearer " + invalidToken)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(status().isUnauthorized());
+
+    }
+
+    
 
 }
